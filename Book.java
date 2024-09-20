@@ -30,7 +30,13 @@ public class Book {
 
     static class compareByTitle implements Comparator<Book>{
         public int compare(Book bOne, Book bTwo){
-            return bOne.title.compareTo(bTwo.title);
+            return bOne.title.compareToIgnoreCase(bTwo.title);
+        }
+    }
+
+    static class compareByAuthor implements Comparator<Book>{
+        public int compare(Book bOne, Book bTwo){
+            return bOne.author.compareToIgnoreCase(bTwo.author);
         }
     }
 }
