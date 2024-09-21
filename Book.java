@@ -21,7 +21,7 @@ public class Book {
         return this.title;
     }
 
-    public boolean getRead(){
+    public boolean getRead() {
         return this.read;
     }
 
@@ -33,7 +33,6 @@ public class Book {
 
     /*
      * @pre Rating is an integer between 1 and 5
-     * 
      */
     public void rate(int rating) {
         this.rating = rating;
@@ -52,4 +51,5 @@ public class Book {
             return bOne.author.compareToIgnoreCase(bTwo.author);
         }
     }
+
 }
