@@ -7,4 +7,9 @@ public class Library {
         return new ArrayList<Book>();
 
     }
+
+    public void addBook(String title, String author) {
+
+    }
+
 }

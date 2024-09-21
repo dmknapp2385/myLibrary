@@ -1,7 +1,6 @@
 
 import java.util.Comparator;
 
-
 public class Book {
 
     boolean read;
@@ -12,6 +11,18 @@ public class Book {
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
+    }
+
+    public String getAuthor() {
+        return this.author;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public boolean getRead(){
+        return this.read;
     }
 
     public void setToRead() {
@@ -28,14 +39,16 @@ public class Book {
         this.rating = rating;
     }
 
-    static class compareByTitle implements Comparator<Book>{
-        public int compare(Book bOne, Book bTwo){
+    static class compareByTitle implements Comparator<Book> {
+
+        public int compare(Book bOne, Book bTwo) {
             return bOne.title.compareToIgnoreCase(bTwo.title);
         }
     }
 
-    static class compareByAuthor implements Comparator<Book>{
-        public int compare(Book bOne, Book bTwo){
+    static class compareByAuthor implements Comparator<Book> {
+
+        public int compare(Book bOne, Book bTwo) {
             return bOne.author.compareToIgnoreCase(bTwo.author);
         }
     }
