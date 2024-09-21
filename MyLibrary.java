@@ -2,9 +2,13 @@
 import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 
+/*
+ * Program: Large Assignment 2
+ * Authors: Elle Knapp (dmknapp2385) and Eman Ayaz()
+ * 
+ */
 class MyLibrary {
 
     static Library library = new Library();
@@ -13,6 +17,7 @@ class MyLibrary {
     public static void main(String[] args) {
         System.out.println("Welcome to your library. Press 1 to exit anytime.");
 
+        //Get user input for library command
         while (true) {
             System.out.println("What would you like to do? You can search,"
                     + " addBook, setToRead, rate, getBooks, suggestRead, or addBooks.");
@@ -21,6 +26,11 @@ class MyLibrary {
             input = input.toLowerCase().trim();
             if (input.equals("search")) {
                 ArrayList<Book> books = searchBook();
+                if (!books.isEmpty()) {
+                    for (Book book : books) {
+                        System.out.println(book.getTitle() + " : " + book.getAuthor());
+                    }
+                }
             } else if (input.equals("addBook")) {
                 addBook();
             } else if (input.equals("setToRead")) {
@@ -41,7 +51,9 @@ class MyLibrary {
         }
     }
 
-    // method checks if input string is 1 and exits program if true
+    /*
+     * method checks if input string is 1 and exits program if true
+     */
     private static void checkExit(String in) {
         if (in.equals("1")) {
             System.out.println("Goodbye!");
@@ -50,8 +62,10 @@ class MyLibrary {
         }
     }
 
-    // method gets user input for search type and name
-    // calls library search method
+    /*
+     * Method gets user input for search type and name and gets all books 
+     * corresponding to those inputs
+     */
     private static ArrayList<Book> searchBook() {
         System.out.println("How would you like to search? By author, title"
                 + " or rating?");
@@ -73,8 +87,10 @@ class MyLibrary {
         }
     }
 
-    // method gets user input for title and author of book and 
-    // adds to the library
+    /*
+     * Method gets user input for title and author of a book and adds it to the 
+     * library if it does not already exist
+     */
     private static void addBook() {
         System.out.println("What is the name of the book you woud like to add? ");
         String title = keyboard.nextLine().trim();
@@ -85,6 +101,9 @@ class MyLibrary {
         library.addBook(title, author);
     }
 
+    /*
+     * Method gets user input for title of a book and sets to read if found
+     */
     private static void setToRead() {
         System.out.println("What is the name of the book you woud like to read?");
         String title = keyboard.nextLine().trim();
@@ -97,6 +116,10 @@ class MyLibrary {
         }
     }
 
+    /*
+     * Method gets input for book and rating and changes book to specified 
+     * rating if the book can be found. 
+     */
     private static void rate() {
         System.out.println("What is the name of the book you woud like to rate?");
         String title = keyboard.nextLine().trim();
@@ -107,9 +130,11 @@ class MyLibrary {
             Integer rating;
             while (true) {
                 try {
-                    System.out.println("What rating would you like to give this book, enter a number"
-                            + "between 1 and 5");
-                    rating = Integer.parseInt(keyboard.nextLine());
+                    System.out.println("What rating would you like to give this"
+                            + " book, enter a number between 1 and 5");
+                    String input = keyboard.nextLine().trim();
+                    checkExit(input);
+                    rating = Integer.parseInt(input);
                     if (rating < 1 || rating > 6) {
                         System.out.println("Sorry this is not a valid rating.");
                     } else {
@@ -119,20 +144,35 @@ class MyLibrary {
                     System.out.println("Sorry this is not a valid rating.");
                 }
             }
-            book.setToRead();
+            book.rate(rating);
         } catch (NoSuchElementException e) {
 
         }
     }
 
+    /*
+     * Method retrieves all books from the library sorted in alphabetical order
+     * by title, or author. Or returns read/unread books. User input determines 
+     * how to sort
+     */
     private static void getBooks() {
 
     }
 
+    /*
+     * Method returns a ranodm unread book from the library
+     */
     private static void suggestRead() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /*
+     * Method adds multiple books to the library after reading them in from a
+     * textfile. User input is the name of a file/path.
+     * 
+     * @pre- textfile must be in the format title;autor
+     * @throws- FileNotFoundException if file not found at input path
+     */
     private static void addBooks() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
