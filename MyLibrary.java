@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 class MyLibrary {
+
     static Library library = new Library();
     static Scanner keyboard = new Scanner(System.in);
 
@@ -16,11 +17,7 @@ class MyLibrary {
             System.out.println("What would you like to do? You can search,"
                     + " addBook, setToRead, rate, getBooks, suggestRead, or addBooks.");
             String input = keyboard.nextLine();
-            if (input.equals("1")) {
-                System.out.println("Goodbye!");
-                end = true;
-                break;
-            }
+            checkExit(input);
 
             input = input.toLowerCase().trim();
             if (input.equals("search")) {
@@ -46,16 +43,23 @@ class MyLibrary {
         keyboard.close();
     }
 
+    private static void checkExit(String in) {
+        if (in.equals("1")) {
+            System.out.println("Goodbye!");
+            System.exit(1);
+        }
+    }
+
     private static ArrayList<Book> searchBook() {
-        System.out.println("How would you like to search? By author, title" +
-        " or rating?");
+        System.out.println("How would you like to search? By author, title"
+                + " or rating?");
         String searchP = keyboard.nextLine().toLowerCase().trim();
         if (!searchP.equals("author")
                 && !searchP.equals("title")
-                &&  !searchP.equals("rating")){
-                System.out.println("Did not recognize that input");
-                return new ArrayList<Book>();
-            }
+                && !searchP.equals("rating")) {
+            System.out.println("Did not recognize that input");
+            return new ArrayList<Book>();
+        }
         System.out.println("What " + searchP + " would you like to search for?");
         String toSearch = keyboard.nextLine().toLowerCase().trim();
         return library.search(searchP, toSearch);
