@@ -11,6 +11,8 @@ public class Book {
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
+        this.rating = 0;
+        this.read = false;
     }
 
     public String getAuthor() {
@@ -52,4 +54,11 @@ public class Book {
         }
     }
 
+    public String toString() {
+        return getTitle() + " : " + getAuthor();
+    }
+
+    public boolean equals(Book other) {
+        return this.title.equals(other.title) && this.author.equals(other.author);
+    }
 }

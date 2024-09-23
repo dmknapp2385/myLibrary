@@ -1,9 +1,9 @@
 
-import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 /*
  * Program: Large Assignment 2
@@ -12,8 +12,9 @@ import java.util.NoSuchElementException;
  */
 class MyLibrary {
 
-    static Library library = new Library();
-    static Scanner keyboard = new Scanner(System.in);
+    private static final Scanner keyboard = new Scanner(System.in);
+
+    private static Controller control = new Controller(new Library(), keyboard);
 
     public static void main(String[] args) {
         System.out.println("Welcome to your library. Press 0 to exit anytime.");
@@ -23,7 +24,7 @@ class MyLibrary {
             System.out.println("What would you like to do? You can search,"
                     + " addBook, setToRead, rate, getBooks, suggestRead, or addBooks.");
             String input = keyboard.nextLine().trim();
-            checkExit(input);
+            control.checkExit(input);
             input = input.toLowerCase();
 
             if (input.equals("search")) {
@@ -56,17 +57,6 @@ class MyLibrary {
     }
 
     /*
-     * method checks if input string is 1 and exits program if true
-     */
-    private static void checkExit(String in) {
-        if (in.equals("0")) {
-            System.out.println("Goodbye!");
-            keyboard.close();
-            System.exit(1);
-        }
-    }
-
-    /*
      * Method gets user input for search type and name and gets all books 
      * corresponding to those inputs
      * 
@@ -78,7 +68,7 @@ class MyLibrary {
         String searchP;
         while (true) {
             searchP = keyboard.nextLine().toLowerCase().trim();
-            checkExit(searchP);
+            control.checkExit(searchP);
             if (!searchP.equals("author")
                     && !searchP.equals("title")
                     && !searchP.equals("rating")) {
@@ -93,15 +83,14 @@ class MyLibrary {
         } else {
             System.out.println("What " + searchP + " would you like to search for?");
             String toSearch = keyboard.nextLine().toLowerCase().trim();
-            checkExit(toSearch);
-            books = library.search(searchP, toSearch);
+            control.checkExit(toSearch);
+            books = control.search(searchP, toSearch);
         }
         return books;
     }
 
     /*
-     * Input validation and search by rating
-     * 
+     * Input validation to search by rating
      */
     private static ArrayList<Book> searchByRating() {
         int rating;
@@ -109,7 +98,7 @@ class MyLibrary {
             try {
                 System.out.println("What rating would you like to search for?(1-5)");
                 String input = keyboard.nextLine().trim();
-                checkExit(input);
+                control.checkExit(input);
                 rating = Integer.parseInt(input);
                 if (rating < 1 || rating > 5) {
                     System.out.println("Sorry this is not a valid rating.");
@@ -120,7 +109,7 @@ class MyLibrary {
                 System.out.println("Sorry this is not a valid rating.");
             }
         }
-        return library.search(rating);
+        return control.search(rating);
     }
 
     /*
@@ -130,19 +119,17 @@ class MyLibrary {
     private static void addBook() {
         System.out.println("What is the name of the book you woud like to add?");
         String title = keyboard.nextLine().trim();
-        checkExit(title);
+        control.checkExit(title);
         System.out.println("What is the name of the author?");
         String author = keyboard.nextLine().trim();
-        checkExit(author);
+        control.checkExit(author);
 
         //add book if it does not already exist
         try {
-            library.checkIfBookExists(title, author);
-            System.out.println("This book already exists.");
-        } catch (NoSuchElementException e) {
-            library.addBook(title, author);
+            control.addBook(title, author);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
-
     }
 
 
@@ -152,16 +139,15 @@ class MyLibrary {
     private static void setToRead() {
         System.out.println("What is the name of the book you woud like to read?");
         String title = keyboard.nextLine().trim();
-        checkExit(title);
+        control.checkExit(title);
 
         System.out.println("Who is the author?");
         String author = keyboard.nextLine().trim();
-        checkExit(author);
+        control.checkExit(author);
         try {
-            library.checkIfBookExists(title, author);
-            library.setToRead(title, author);
-        } catch (NoSuchElementException e) {
-            System.out.println("Sorry no such book exists with this title and author.");
+            control.setToRead(title, author);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -172,19 +158,18 @@ class MyLibrary {
     private static void rate() {
         System.out.println("What is the name of the book you woud like to rate?");
         String title = keyboard.nextLine().trim();
-        checkExit(title);
+        control.checkExit(title);
         System.out.println("What is the name of the author?");
         String author = keyboard.nextLine().trim();
-        checkExit(author);
+        control.checkExit(author);
         try {
-            library.checkIfBookExists(title, author);
             Integer rating;
             while (true) {
                 try {
                     System.out.println("What rating would you like to give this"
                             + " book, enter a number between 1 and 5");
                     String input = keyboard.nextLine().trim();
-                    checkExit(input);
+                    control.checkExit(input);
                     rating = Integer.parseInt(input);
                     if (rating < 1 || rating > 5) {
                         System.out.println("Sorry this is not a valid rating.");
@@ -216,7 +201,7 @@ class MyLibrary {
                         + " Enter 1 for by title, 2 by author, 3 for all read, or 4 for"
                         + " unread books");
                 String input = keyboard.nextLine().trim();
-                checkExit(input);
+                control.checkExit(input);
                 sortMethod = Integer.parseInt(input);
                 if (sortMethod < 1 || sortMethod > 4) {
                     System.out.println("Sorry this is not a valid input.");
@@ -261,7 +246,6 @@ class MyLibrary {
             String author = titleAuthor[1];
 
             try {
-                library.checkIfBookExists(title, author);
                 library.addBook(title, author);
                 System.out.println("Book " + title + " by " + author + " added to your library");
             } catch (Exception e) {
