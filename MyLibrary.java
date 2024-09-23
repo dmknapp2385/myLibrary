@@ -43,9 +43,18 @@ class MyLibrary {
             } else if (input.equals("rate")) {
                 rate();
             } else if (input.equals("getbooks")) {
-                getBooks();
+                ArrayList<Book> books = getBooks();
+                if (!books.isEmpty()) {
+                    for (Book book : books) {
+                        System.out.println(book.getTitle() + " : " + book.getAuthor());
+                    }
+                } else {
+                    System.out.println("Sorry no books found in your library.");
+                }
+
             } else if (input.equals("suggestread")) {
-                suggestRead();
+                Book suggestion = suggestRead();
+                System.out.println(suggestion.getTitle() + " : " + suggestion.getAuthor());
             } else if (input.equals("addbooks")) {
                 addBooks();
             } else {
@@ -127,6 +136,7 @@ class MyLibrary {
         //add book if it does not already exist
         try {
             control.addBook(title, author);
+            System.out.println("Book added to your library");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -146,6 +156,7 @@ class MyLibrary {
         control.checkExit(author);
         try {
             control.setToRead(title, author);
+            System.out.println("Book read!");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -181,7 +192,8 @@ class MyLibrary {
                 }
             }
             control.rate(title, author, rating);
-        } catch (NoSuchElementException e) {
+            System.out.println("Book rated!");
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -232,12 +244,16 @@ class MyLibrary {
     private static void addBooks() {
         System.out.println("Enter the name or path of the file containing"
                 + " books you would like to add.");
-        String fileName = keyboard.nextLine().trim();
         Scanner inFile = null;
-        try {
-            inFile = new Scanner(new File(fileName));
-        } catch (FileNotFoundException e) {
-            System.out.println("Could not find file with this name");
+        while (true) {
+            try {
+                String fileName = keyboard.nextLine().trim();
+                control.checkExit(fileName);
+                inFile = new Scanner(new File(fileName));
+                break;
+            } catch (FileNotFoundException e) {
+                System.out.println("Could not find file with this name");
+            }
         }
         while (inFile.hasNextLine()) {
             String book = inFile.nextLine();

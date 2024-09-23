@@ -2,7 +2,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-class Controller {
+public class Controller {
 
     private Library library;
     private Scanner keyboard;
