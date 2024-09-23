@@ -180,9 +180,9 @@ class MyLibrary {
                     System.out.println("Sorry this is not a valid rating.");
                 }
             }
-            library.rate(title, author, rating);
+            control.rate(title, author, rating);
         } catch (NoSuchElementException e) {
-            System.out.println("Sorry, no such book exists with this title");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -212,14 +212,14 @@ class MyLibrary {
                 System.out.println("Sorry this is not a valid input.");
             }
         }
-        return library.getBooks(sortMethod);
+        return control.getBooks(sortMethod);
     }
 
     /*
      * Method returns a random unread book from the library
      */
     private static Book suggestRead() {
-        return library.suggestRead();
+        return control.suggestRead();
     }
 
     /*
@@ -246,10 +246,11 @@ class MyLibrary {
             String author = titleAuthor[1];
 
             try {
-                library.addBook(title, author);
+                control.addBook(title, author);
                 System.out.println("Book " + title + " by " + author + " added to your library");
-            } catch (Exception e) {
-                System.out.println("Book " + title + " by " + author + " already exists");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage() + " Title: " + title + ", Author: "
+                        + author);
             }
         }
 

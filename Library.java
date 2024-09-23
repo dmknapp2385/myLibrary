@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Library {
 
@@ -25,31 +26,18 @@ public class Library {
 
     }
 
-    public void addBook(String title, String author) {
-        // throw illegalargument exception with string constructor
-        // "this book already exists" or "cannot have a blank author/title"
-
-    }
-
-    public ArrayList<Book> getBooks(int sortMethod) {
-        return new ArrayList<Book>();
-    }
-
+    //get random unread book
     public Book suggestRead() {
-        return new Book("test", "test");
+        return new Book("", "");
     }
 
-    public void setToRead(String title, String author) {
-        //throw no such element exception if does not exits
+    //add a book
+    public void addBook(String title, String author) {
 
-    }
-
-    public void rate(String title, String author, int rating) {
-        // check if book exits and throw noSuchElement Exception
     }
 
     /*
-     * throws NoSuchElementException
+     * check if book in books
      */
     public boolean contains(String title, String author) {
         Book newBook = new Book(title, author);
@@ -62,8 +50,54 @@ public class Library {
         return false;
     }
 
-    public Book getBook(String title, String Author) {
-        return new Book("", "");
+    //retuns a singular book to be changed
+    public Book getBook(String title, String author) {
+        return new Book(title, author);
+    }
+
+    /*
+     * Returns copy of list sorted in alphabetical order by title
+     */
+    public ArrayList<Book> sortTitle() {
+        ArrayList<Book> copy = new ArrayList<>(books);
+        Collections.sort(copy, new Book.CompareByTitle());
+        return copy;
+
+    }
+
+    /*
+     * Returns copy of list sorted in alphabetical order by author
+     */
+    public ArrayList<Book> sortAuthor() {
+        ArrayList<Book> copy = new ArrayList<>(books);
+        Collections.sort(copy, new Book.CompareByAuthor());
+        return copy;
+    }
+
+    /*
+     * Returns list containing read books
+     */
+    public ArrayList<Book> sortRead() {
+        ArrayList<Book> copy = new ArrayList<>();
+        for (Book book : books) {
+            if (book.read) {
+                copy.add(book);
+            }
+        }
+        return copy;
+    }
+
+    /*
+     * Returns a list containing unread books
+     */
+    public ArrayList<Book> sortUnread() {
+        ArrayList<Book> copy = new ArrayList<>();
+        for (Book book : books) {
+            if (!book.read) {
+                copy.add(book);
+            }
+        }
+        return copy;
     }
 
 }

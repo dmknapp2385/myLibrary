@@ -37,27 +37,47 @@ class Controller {
 
     public void addBook(String title, String author) throws IllegalArgumentException {
         if (library.contains(title, author)) {
-            throw new IllegalArgumentException("This book already exists");
+            throw new IllegalArgumentException("This book already exists.");
         }
         if (title.equals("") || author.equals("")) {
-            throw new IllegalArgumentException("Must have both title and author");
+            throw new IllegalArgumentException("Must have both title and author.");
         }
         library.addBook(title, author);
 
     }
 
-    public void setToRead(String title, String author) throws IllegalArgumentException{
+    public void setToRead(String title, String author) throws IllegalArgumentException {
         if (!library.contains(title, author)) {
             throw new IllegalArgumentException("Sorry no such book found");
         }
         library.getBook(title, author).setToRead();
     }
 
-    public void rate(String title, String author, int rating) {
+    public void rate(String title, String author, int rating) throws IllegalArgumentException {
         if (!library.contains(title, author)) {
             throw new IllegalArgumentException("Sorry no such book found");
         }
         library.getBook(title, author).rate(rating);
+    }
+
+    /*
+     * @pre sortMeth is an integer between 1 and 4. 
+     */
+    public ArrayList<Book> getBooks(int sortMeth) {
+        if (sortMeth == 1) {
+            return library.sortTitle();
+        }
+        if (sortMeth == 2) {
+            return library.sortAuthor();
+        }
+        if (sortMeth == 3) {
+            return library.sortRead();
+        }
+        return library.sortUnread();
+    }
+
+    public Book suggestRead() {
+        return library.suggestRead();
     }
 
 }

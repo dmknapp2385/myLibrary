@@ -40,14 +40,14 @@ public class Book {
         this.rating = rating;
     }
 
-    static class compareByTitle implements Comparator<Book> {
+    public static class CompareByTitle implements Comparator<Book> {
 
         public int compare(Book bOne, Book bTwo) {
             return bOne.title.compareToIgnoreCase(bTwo.title);
         }
     }
 
-    static class compareByAuthor implements Comparator<Book> {
+    public static class CompareByAuthor implements Comparator<Book> {
 
         public int compare(Book bOne, Book bTwo) {
             return bOne.author.compareToIgnoreCase(bTwo.author);
