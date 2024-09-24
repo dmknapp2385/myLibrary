@@ -50,14 +50,14 @@ public class Controller {
         if (!library.contains(title, author)) {
             throw new IllegalArgumentException("Sorry no such book found");
         }
-        library.getBook(title, author).setToRead();
+        library.setToRead(title, author);
     }
 
     public void rate(String title, String author, int rating) throws IllegalArgumentException {
         if (!library.contains(title, author)) {
             throw new IllegalArgumentException("Sorry no such book found");
         }
-        library.getBook(title, author).rate(rating);
+        library.rate(title, author, rating);
     }
 
     /*

@@ -1,13 +1,25 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Library {
 
     private ArrayList<Book> books;
+    private HashMap<Integer, LinkedList<Book>> ratings;
+    private ArrayList<Book> read;
+    private ArrayList<Book> unread;
 
     public Library() {
         this.books = new ArrayList<Book>();
+        this.ratings = new HashMap<Integer,LinkedList<Book>();
+        //initialize empty lists for hash map
+        for(int i = 0; i < 6; i++){
+            ratings.put(i,new LinkedList<Book>());
+        }
+        this.read = new ArrayList<Book>();
+        this.unread = new ArrayList<Book>();
     }
 
     /*post- returns a list of Book objects or the empty list */
@@ -26,12 +38,28 @@ public class Library {
 
     }
 
-    //get random unread book
+    public void setToRead(String title, String author) {
+
+    }
+
+    /*
+     * @pre rating is an integer value between 1 and 5
+     * @post book with title and author will be moved to appropriate rating
+     */
+    public void rate(String title, String author, int rating) {
+
+    }
+
+    /*
+     * @post returned book will be a random selection from unread books
+     */
     public Book suggestRead() {
         return new Book("", "");
     }
 
-    //add a book
+    /*
+     * Add book to list of books, default is to add to rating of 0 and unread
+     */
     public void addBook(String title, String author) {
 
     }
@@ -50,13 +78,8 @@ public class Library {
         return false;
     }
 
-    //retuns a singular book to be changed
-    public Book getBook(String title, String author) {
-        return new Book(title, author);
-    }
-
     /*
-     * Returns copy of list sorted in alphabetical order by title
+     * Returns copy of books sorted in alphabetical order by title
      */
     public ArrayList<Book> sortTitle() {
         ArrayList<Book> copy = new ArrayList<>(books);
@@ -66,7 +89,7 @@ public class Library {
     }
 
     /*
-     * Returns copy of list sorted in alphabetical order by author
+     * Returns copy of books sorted in alphabetical order by author
      */
     public ArrayList<Book> sortAuthor() {
         ArrayList<Book> copy = new ArrayList<>(books);
@@ -75,29 +98,17 @@ public class Library {
     }
 
     /*
-     * Returns list containing read books
+     * Returns read books
      */
     public ArrayList<Book> sortRead() {
-        ArrayList<Book> copy = new ArrayList<>();
-        for (Book book : books) {
-            if (book.read) {
-                copy.add(book);
-            }
-        }
-        return copy;
+        return new ArrayList<Book>(read);
     }
 
     /*
-     * Returns a list containing unread books
+     * Returns unread books
      */
     public ArrayList<Book> sortUnread() {
-        ArrayList<Book> copy = new ArrayList<>();
-        for (Book book : books) {
-            if (!book.read) {
-                copy.add(book);
-            }
-        }
-        return copy;
+        return new ArrayList<Book>(unread);
     }
 
 }
