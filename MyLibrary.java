@@ -12,9 +12,9 @@ import java.util.Scanner;
  */
 class MyLibrary {
 
-    private static final Scanner keyboard = new Scanner(System.in);
+    private static Scanner keyboard = new Scanner(System.in);
 
-    private static Controller control = new Controller(new Library(), keyboard);
+    private static Controller control = new Controller(keyboard);
 
     public static void main(String[] args) {
         System.out.println("Welcome to your library. Press 0 to exit anytime.");
