@@ -13,7 +13,7 @@ public class Library {
 
     public Library() {
         this.books = new ArrayList<Book>();
-        this.ratings = new HashMap<Integer,LinkedList<Book>();
+        this.ratings = new HashMap<Integer,LinkedList<Book>>();
         //initialize empty lists for hash map
         for(int i = 0; i < 6; i++){
             ratings.put(i,new LinkedList<Book>());
