@@ -16,23 +16,8 @@ import java.util.Scanner;
 public class Controller {
 
     private Library library = new Library();
-    private Scanner keyboard;
 
-    public Controller(Scanner keyboard) {
-        this.keyboard = keyboard;
-    }
-
-    /*
-     * method checks if input string is 1 and exits program if true
-     */
-    public void checkExit(String in) {
-        if (in.equals("0")) {
-            System.out.println("Goodbye!");
-            keyboard.close();
-            System.exit(1);
-        }
-    }
-
+   
     /*
      * Method returns a list of books based on title or author name
      * 

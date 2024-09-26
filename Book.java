@@ -6,10 +6,9 @@ import java.util.Comparator;
  * Authors: Elle Knapp(dmknapp2385) and Eman Ayaz(emanayaz)
  * 
  * Encapsulation is achieved in the immutability of the object and scope of the
- * instance variables. All fields are private and can only be accessed via the
- * class getters. Additionally, field values are strings which are immuntable, 
- * this makes the class itself immutable as once a book object is craeted, none
- * of the internal data can be altered. 
+ * instance variables. All fields are private and information in the fields is
+ * only returned in the classes toString method this makes the class  immutable
+ * as once a book object is craeted, none of the internal data can be altered. 
  */
 public final class Book {
 
@@ -21,15 +20,9 @@ public final class Book {
         this.author = author;
     }
 
-    //getters
-    public String getAuthor() {
-        return this.author;
+    public String toString() {
+        return this.title + " by " + this.author;
     }
-
-    public String getTitle() {
-        return this.title;
-    }
-
 
     /*
      * Comparator class that returns a method to sort Book alphabetically by
@@ -55,7 +48,7 @@ public final class Book {
 
 
     /*
-     * Compares two book objects to determin if they are the same book. Title
+     * Compares two book objects to determine if they are the same book. Title
      * is case sensitive but author is not. 
      */
     public boolean equals(Book other) {
